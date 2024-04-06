@@ -25,17 +25,18 @@ export default {
         heading: '',
         body: '',
       },
-      methods: {
-        createPost() {
-          this.post.id = Date.now();
-          this.$emit('create', this.post);
-          this.post = {
-            heading: '',
-            body: '',
-          };
-        },
-      },
     };
+  },
+
+  methods: {
+    createPost() {
+      this.post.id = Date.now();
+      this.$emit('create', this.post);
+      this.post = {
+        heading: '',
+        body: '',
+      };
+    },
   },
 };
 </script>
