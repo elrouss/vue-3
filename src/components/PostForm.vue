@@ -39,7 +39,7 @@ export default defineComponent({
 .form {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 500px;
 }
 
 .btn {

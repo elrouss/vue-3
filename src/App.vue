@@ -1,7 +1,11 @@
 <template>
   <div class="wrapper">
-    <post-form @create="createPost" />
+    <h1>Страница с постами</h1>
+    <my-btn style="margin-top: 15px" @click="showDialog">Создать пост</my-btn>
     <post-list :posts="posts" @remove="removePost" />
+    <my-dialog v-model:isShown="isDialogVisible"
+      ><post-form @create="createPost"
+    /></my-dialog>
   </div>
 </template>
 
@@ -17,12 +21,18 @@ export default defineComponent({
   data() {
     return {
       posts: [] as IPost[],
+      isDialogVisible: false,
     };
   },
 
   methods: {
+    showDialog() {
+      this.isDialogVisible = true;
+    },
+
     createPost(post: IPost) {
       this.posts.push(post);
+      this.isDialogVisible = false;
     },
 
     removePost(post: IPost) {
