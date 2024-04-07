@@ -1,29 +1,35 @@
 <template>
   <div class="wrapper">
     <post-form @create="createPost" />
-    <post-list :posts="posts" />
+    <post-list :posts="posts" @remove="removePost" />
   </div>
 </template>
 
-<script>
-import PostForm from '@/components/PostForm';
-import PostList from '@/components/PostList';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import PostForm from '@/components/PostForm.vue';
+import PostList from '@/components/PostList.vue';
+import { IPost } from './types';
 
-export default {
+export default defineComponent({
   components: { PostForm, PostList },
 
   data() {
     return {
-      posts: [],
+      posts: [] as IPost[],
     };
   },
 
   methods: {
-    createPost(post) {
+    createPost(post: IPost) {
       this.posts.push(post);
     },
+
+    removePost(post: IPost) {
+      this.posts = this.posts.filter((p) => p.id !== post.id);
+    },
   },
-};
+});
 </script>
 
 <style lang="scss">
