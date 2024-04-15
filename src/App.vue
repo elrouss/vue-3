@@ -2,7 +2,8 @@
   <div class="wrapper">
     <h1>Страница с постами</h1>
     <my-btn style="margin-top: 15px" @click="showDialog">Создать пост</my-btn>
-    <post-list :posts="posts" @remove="removePost" />
+    <post-list :posts="posts" v-if="!arePostsLoading" @remove="removePost" />
+    <my-preloader v-else>Идет загрузка...</my-preloader>
     <my-dialog v-model:isShown="isDialogVisible"
       ><post-form @create="createPost"
     /></my-dialog>
@@ -11,6 +12,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import axios, { AxiosResponse } from 'axios';
 import PostForm from '@/components/PostForm.vue';
 import PostList from '@/components/PostList.vue';
 import { IPost } from './types';
@@ -22,6 +24,7 @@ export default defineComponent({
     return {
       posts: [] as IPost[],
       isDialogVisible: false,
+      arePostsLoading: false,
     };
   },
 
@@ -38,6 +41,27 @@ export default defineComponent({
     removePost(post: IPost) {
       this.posts = this.posts.filter((p) => p.id !== post.id);
     },
+
+    async fetchPosts() {
+      try {
+        this.arePostsLoading = true;
+
+        const response: AxiosResponse<IPost[], unknown> = await axios.get(
+          'https://jsonplaceholder.typicode.com/posts?_limit=10'
+        );
+
+        if (response.status !== 200) throw new Error();
+        this.posts = response.data;
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.arePostsLoading = false;
+      }
+    },
+  },
+
+  mounted() {
+    this.fetchPosts();
   },
 });
 </script>

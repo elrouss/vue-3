@@ -1,7 +1,7 @@
 <template>
   <form class="form" @submit.prevent>
     <h2>Добавить новый пост</h2>
-    <my-input placeholder="Название" v-model:value="post.heading" />
+    <my-input placeholder="Название" v-model:value="post.title" />
     <my-input placeholder="Описание" v-model:value="post.body" />
     <my-btn class="btn" @click="createPost">Создать</my-btn>
   </form>
@@ -15,7 +15,7 @@ export default defineComponent({
     return {
       post: {
         id: '',
-        heading: '',
+        title: '',
         body: '',
       },
     };
@@ -27,7 +27,7 @@ export default defineComponent({
       this.$emit('create', this.post);
       this.post = {
         id: '',
-        heading: '',
+        title: '',
         body: '',
       };
     },

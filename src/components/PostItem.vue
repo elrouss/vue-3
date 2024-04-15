@@ -2,9 +2,7 @@
   <article class="post">
     <div class="post__content">
       <header>
-        <h3 class="post__heading">
-          <strong>Название:</strong> {{ post.heading }}
-        </h3>
+        <h3 class="post__title"><strong>Название:</strong> {{ post.title }}</h3>
       </header>
       <p class="post__paragraph"><strong>Описание:</strong> {{ post.body }}</p>
     </div>
@@ -41,7 +39,7 @@ export default defineComponent({
     margin-top: 15px;
   }
 
-  &__heading {
+  &__title {
     font-weight: 400;
   }
 }
